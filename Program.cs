@@ -12,28 +12,23 @@
         {
             public static double price = 2000;
             public int month;
-            public Status status;
 
-            public Abonement(int month, Status status)
+            public Abonement(int month)
             {
                 if (month > 12 || month <= 0)
                 this.month = 1;
                 
-                else this.month = month;
-                this.status = status;   
+                else this.month = month;   
             }
 
-            //public Abonement(Status status)
-            //{
-            //    this.status = status;
-            //}
+
             public void Discount()
             {
                 if (month >= 6) price *= 0.8;
                 if (month >= 3) price *= 0.9;
             }
 
-            public void DiscountStatus()
+            public void DiscountStatus(Status status)
             {
                 if (status == Status.Silver) price *= 0.9;
                 else if (status == Status.Gold) price *= 0.75;
@@ -44,20 +39,23 @@
         {
             public Abonement Abonement;
             public string Name;
-            public Client(string Name, Abonement abonement)
+            public Status status;
+            public Client(string Name, Abonement abonement, Status status)
             {
                 this.Name = Name;
                 this.Abonement = abonement;
+                this.status = status;
             }
         }
         static void Main(string[] args)
         {
-
-            Abonement abonement = new Abonement(4, Status.Gold);
+            Abonement abonement = new Abonement(4);
+            Client client1 = new Client("Alex", abonement, Status.Silver);
+            
             abonement.Discount();
-            abonement.DiscountStatus();
-            Client client = new Client("Alex", abonement);
-            Console.WriteLine(client);
+            abonement.DiscountStatus(client1.status);
+            //Client client = new Client("Alex", abonement);
+            //Console.WriteLine(client);
         }
     }
 }
